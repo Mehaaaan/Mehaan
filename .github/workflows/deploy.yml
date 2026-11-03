@@ -1,0 +1,38 @@
+
+name: Polynomial Calculator CI
+
+# Automatically run whenever code is pushed
+on:
+  push:
+    branches:
+      - main
+
+  # Also allow manual execution
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test Polynomial Calculator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check Project Files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+
+      - name: Validate JavaScript
+        run: node --check script.js
+
+      - name: Workflow Success
+        run: echo "Polynomial Calculator checks passed!"
+
